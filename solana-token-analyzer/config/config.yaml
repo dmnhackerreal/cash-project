@@ -1,4 +1,4 @@
-# تنظیمات اصلی پروژه
+# Main configuration file
 solana:
   rpc_endpoints:
     primary: "https://api.mainnet-beta.solana.com"
@@ -11,22 +11,16 @@ solana:
     retry_attempts: 3
 
 filters:
-  # لیست سیاه توکن‌ها
-  blacklisted_tokens:
-    - "So11111111111111111111111111111111111111112"  # Wrapped SOL
-    - "4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R"  # RAY
-    - "MNDEFzGvMt87ueuHvVU9VcTqsAP5b3fTGPsHuuPA5ey"  # MNDE
+  # Token blacklist
+  blacklisted_tokens: []
   
-  # لیست سیاه توسعه‌دهندگان
-  blacklisted_developers:
-    - "CZmK9X1nvmj5TqKLi6vXyVtQeZ8bY9pW7RcN2sL3m4Pq"  # Rug creator example
-    - "Dm5L5zQ3hT5sM4n3B2vN1cX8zW9qR7tY6uI0oP3aK2j"  # Bad actor example
+  # Developer blacklist
+  blacklisted_developers: []
   
-  # لیست سیاه مینت‌ها
-  blacklisted_mints:
-    - "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"  # USDC
+  # Mint blacklist
+  blacklisted_mints: []
   
-  # الگوهای کلاهبرداری
+  # Scam detection patterns
   scam_patterns:
     - ".*[Rr][Uu][Gg].*"
     - ".*[Ss][Cc][Aa][Mm].*"
@@ -35,45 +29,39 @@ filters:
     - "test.*"
     - ".*fake.*"
   
-  # حداقل نیازمندی‌ها
+  # Minimum requirements
   minimum_requirements:
     liquidity_usd: 1000
     holders: 50
     age_hours: 24
     volume_24h_usd: 500
   
-  # نشانگرهای مشکوک
+  # Suspicious activity indicators
   suspicious_indicators:
-    high_owner_concentration: 20  # درصد
+    high_owner_concentration: 20
     low_holder_count: 100
     recent_creation_hours: 2
-    large_sell_threshold: 10  # درصد از عرضه
-    abnormal_tx_count: 1000  # تراکنش در ساعت
+    large_sell_threshold: 10
+    abnormal_tx_count: 1000
 
 tier_classification:
   tier_1:
     min_liquidity_usd: 1000000
     min_holders: 1000
     min_age_days: 30
-    requires_kyc: false
-    audit_required: true
   
   tier_2:
     min_liquidity_usd: 100000
     min_holders: 500
     min_age_days: 7
-    requires_kyc: false
-    audit_required: false
   
   tier_3:
     min_liquidity_usd: 10000
     min_holders: 100
     min_age_days: 1
-    requires_kyc: false
-    audit_required: false
 
 alerts:
-  webhook_url: "https://discord.com/api/webhooks/YOUR_WEBHOOK"
+  webhook_url: ""
   
   notification_types:
     tier_upgrade: true
@@ -83,20 +71,18 @@ alerts:
   thresholds:
     whale_threshold_usd: 10000
     large_tx_threshold_usd: 5000
-    price_change_alert: 20  # درصد
+    price_change_alert: 20
 
 database:
   postgres:
     host: "localhost"
     port: 5432
     database: "solana_analysis"
-    user: "solana_bot"
+    user: "postgres"
     password: "${DB_PASSWORD}"
-    
-  redis:
-    host: "localhost"
-    port: 6379
-    cache_ttl: 300
+  
+  sqlite:
+    path: "data/tokens.db"
 
 logging:
   level: "INFO"
@@ -104,6 +90,4 @@ logging:
   max_size_mb: 100
   backup_count: 5
 
-monitored_wallets:
-  - "YOUR_WALLET_ADDRESS_1_HERE"
-  - "YOUR_WALLET_ADDRESS_2_HERE"
+monitored_wallets: []
