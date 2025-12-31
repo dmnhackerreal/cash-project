@@ -1,12 +1,12 @@
-# تنظیمات آنالیز عملکرد
+# Performance analysis configuration
 performance_filters:
   win_rate:
-    minimum: 25  # درصد
+    minimum: 25
     calculation_period: "30D"
     required_samples: 10
   
   pnl_30d:
-    minimum: 40  # درصد
+    minimum: 40
     include_fees: true
   
   transaction_7d:
@@ -20,8 +20,8 @@ performance_filters:
   
   holder_metrics:
     min_unique_holders: 100
-    max_whale_concentration: 30  # درصد
-    holder_growth_7d_min: 10  # درصد
+    max_whale_concentration: 30
+    holder_growth_7d_min: 10
   
   liquidity_quality:
     min_liquidity_usd: 50000
