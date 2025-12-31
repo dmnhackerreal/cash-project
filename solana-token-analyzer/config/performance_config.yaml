@@ -1,0 +1,52 @@
+# تنظیمات آنالیز عملکرد
+performance_filters:
+  win_rate:
+    minimum: 25  # درصد
+    calculation_period: "30D"
+    required_samples: 10
+  
+  pnl_30d:
+    minimum: 40  # درصد
+    include_fees: true
+  
+  transaction_7d:
+    maximum: 150
+    exclude_whale_transactions: true
+    whale_threshold_usd: 10000
+  
+  volume_requirements:
+    min_daily_volume_usd: 50000
+    min_volume_consistency_days: 7
+  
+  holder_metrics:
+    min_unique_holders: 100
+    max_whale_concentration: 30  # درصد
+    holder_growth_7d_min: 10  # درصد
+  
+  liquidity_quality:
+    min_liquidity_usd: 50000
+    lp_lock_required: false
+  
+  time_based_filters:
+    min_age_hours: 24
+    max_age_days: 90
+
+scoring:
+  weights:
+    win_rate: 0.30
+    pnl_30d: 0.25
+    transaction_count: 0.15
+    volume_quality: 0.10
+    holder_distribution: 0.10
+    liquidity_quality: 0.10
+  
+  thresholds:
+    excellent: 85
+    good: 70
+    fair: 60
+    poor: 40
+
+real_time:
+  scan_interval_minutes: 5
+  max_tokens_per_scan: 100
+  price_update_frequency: 60
