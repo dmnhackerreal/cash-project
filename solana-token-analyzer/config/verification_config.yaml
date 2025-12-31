@@ -1,0 +1,36 @@
+# Verification services configuration
+verification:
+  rugcheck:
+    api_key: "${RUGCHECK_API_KEY}"
+    base_url: "https://api.rugcheck.xyz/v1"
+    minimum_score: 60
+  
+  tweetscout:
+    api_key: "${TWEETSCOUT_API_KEY}"
+    base_url: "https://api.tweetscout.io/v1"
+    minimum_verification_score: 70
+  
+  combined_scoring:
+    weights:
+      rugcheck_score: 0.50
+      tweetscout_score: 0.30
+      security_filters: 0.20
+    minimum_combined_score: 65
+
+analysis:
+  purchase_verification:
+    pre_purchase_checks:
+      - "rugcheck_score"
+      - "developer_verification"
+      - "liquidity_lock"
+  
+  token_categories:
+    verified_safe:
+      min_rugcheck_score: 80
+      min_tweetscout_score: 75
+      liquidity_lock_days: 30
+    
+    moderate_risk:
+      min_rugcheck_score: 60
+      min_tweetscout_score: 60
+      liquidity_lock_days: 7
