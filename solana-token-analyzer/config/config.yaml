@@ -1,0 +1,109 @@
+# تنظیمات اصلی پروژه
+solana:
+  rpc_endpoints:
+    primary: "https://api.mainnet-beta.solana.com"
+    secondary: "https://rpc.ankr.com/solana"
+    fallback: "https://solana-api.projectserum.com"
+  
+  rate_limits:
+    requests_per_minute: 120
+    batch_size: 20
+    retry_attempts: 3
+
+filters:
+  # لیست سیاه توکن‌ها
+  blacklisted_tokens:
+    - "So11111111111111111111111111111111111111112"  # Wrapped SOL
+    - "4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R"  # RAY
+    - "MNDEFzGvMt87ueuHvVU9VcTqsAP5b3fTGPsHuuPA5ey"  # MNDE
+  
+  # لیست سیاه توسعه‌دهندگان
+  blacklisted_developers:
+    - "CZmK9X1nvmj5TqKLi6vXyVtQeZ8bY9pW7RcN2sL3m4Pq"  # Rug creator example
+    - "Dm5L5zQ3hT5sM4n3B2vN1cX8zW9qR7tY6uI0oP3aK2j"  # Bad actor example
+  
+  # لیست سیاه مینت‌ها
+  blacklisted_mints:
+    - "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"  # USDC
+  
+  # الگوهای کلاهبرداری
+  scam_patterns:
+    - ".*[Rr][Uu][Gg].*"
+    - ".*[Ss][Cc][Aa][Mm].*"
+    - ".*[Pp][Uu][Mm][Pp].*"
+    - ".*[Dd][Uu][Mm][Pp].*"
+    - "test.*"
+    - ".*fake.*"
+  
+  # حداقل نیازمندی‌ها
+  minimum_requirements:
+    liquidity_usd: 1000
+    holders: 50
+    age_hours: 24
+    volume_24h_usd: 500
+  
+  # نشانگرهای مشکوک
+  suspicious_indicators:
+    high_owner_concentration: 20  # درصد
+    low_holder_count: 100
+    recent_creation_hours: 2
+    large_sell_threshold: 10  # درصد از عرضه
+    abnormal_tx_count: 1000  # تراکنش در ساعت
+
+tier_classification:
+  tier_1:
+    min_liquidity_usd: 1000000
+    min_holders: 1000
+    min_age_days: 30
+    requires_kyc: false
+    audit_required: true
+  
+  tier_2:
+    min_liquidity_usd: 100000
+    min_holders: 500
+    min_age_days: 7
+    requires_kyc: false
+    audit_required: false
+  
+  tier_3:
+    min_liquidity_usd: 10000
+    min_holders: 100
+    min_age_days: 1
+    requires_kyc: false
+    audit_required: false
+
+alerts:
+  webhook_url: "https://discord.com/api/webhooks/YOUR_WEBHOOK"
+  
+  notification_types:
+    tier_upgrade: true
+    new_rug_indicators: true
+    suspicious_activity: true
+  
+  thresholds:
+    whale_threshold_usd: 10000
+    large_tx_threshold_usd: 5000
+    price_change_alert: 20  # درصد
+
+database:
+  postgres:
+    host: "localhost"
+    port: 5432
+    database: "solana_analysis"
+    user: "solana_bot"
+    password: "${DB_PASSWORD}"
+    
+  redis:
+    host: "localhost"
+    port: 6379
+    cache_ttl: 300
+
+logging:
+  level: "INFO"
+  file: "logs/bot.log"
+  max_size_mb: 100
+  backup_count: 5
+
+monitored_wallets:
+  - "YOUR_WALLET_ADDRESS_1_HERE"
+  - "YOUR_WALLET_ADDRESS_2_HERE"
