@@ -32,3 +32,7 @@ source venv/bin/activate
 
 # نصب وابستگی‌ها
 pip install -r requirements.txt
+
+# اجرا
+python main.py
+
